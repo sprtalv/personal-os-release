@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "skill_name": "personal-os",
+  "timezone": "Asia/Shanghai",
+  "morning_time": null,
+  "evening_time": null,
+  "weekly_review": null,
+  "followup_default_days": 7,
+  "repository": {"remote": null, "branch": null}
+}
