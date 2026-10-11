@@ -17,4 +17,4 @@ Scripts enforce structural rules, not semantic accuracy. Search is lexical; inte
 
 ## License
 
-No license has been granted in this release candidate. MIT is a reasonable permissive option after the copyright holder confirms intended terms and attribution. Public availability alone does not grant reuse rights.
+No license has been granted for this repository. MIT is a reasonable permissive option after the copyright holder confirms intended terms and attribution. Public availability alone does not grant reuse rights.
