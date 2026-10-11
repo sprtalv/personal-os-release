@@ -11,6 +11,8 @@ An experimental Skill for organizing selected personal evidence, plans, correcti
 
 records.py validates and saves structured Markdown records with provenance and cross-references. followups.py tracks due questions and outcomes. publish.py optionally publishes selected files from a separately configured private Git data root. Read the Skill and its references before writes.
 
+Important, reusable understandings and AI suggestions now have separate [insight](.agents/skills/personal-os/assets/templates/insight.md) and [recommendation](.agents/skills/personal-os/assets/templates/recommendation.md) templates. `records.py impact --root ROOT --record-id ID` lists linked files and exact-ID mentions to review after a correction; it cannot repair meaning automatically. [Design sources and limits](.agents/skills/personal-os/references/design-evidence.md) explain the choices without claiming proven long-term benefit.
+
 ## 与 dot 配合使用
 
 dot 可以作为统一聊天入口：用户正常说话，无须每次手动调用 Skill 或填写表格。下面是可复制到支持自定义入口指令的宿主中的**通用工作约定**。先由安装者填写并实际核验占位项；不要把私人数据目录设为本公开仓库。README 不会自动配置 dot，也不能证明每轮调用钩子、定时任务或消息发送已经启用。

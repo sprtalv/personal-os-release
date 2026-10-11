@@ -8,10 +8,15 @@ record_refs: []
 user_hypothesis_refs: []
 ai_hypothesis_refs: []
 outcome_refs: []
+insight_refs: []
+recommendation_refs: []
+purpose: null
+investment_boundary: null
+pause_condition: null
 ---
 
 ## 当时情况与目标
-{{当时的资料、资源、约束；未知就明确未知}}
+{{当时的资料、资源、约束；重要项目还可记录为什么做、愿意投入的边界和暂停条件；未知就明确未知}}
 
 ## 当时的理解与选择
 {{本人判断、AI 判断分别引用；实际考虑过的选项；事后回忆标注补充时间}}

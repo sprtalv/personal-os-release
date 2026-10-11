@@ -39,7 +39,7 @@ record 必填字段：
 
 | 字段 | 值与意义 |
 |---|---|
-| kind | experience / observation / feeling / view / intention / decision / hypothesis / outcome / correction |
+| kind | experience / observation / feeling / view / intention / decision / hypothesis / outcome / correction / insight / recommendation |
 | author | user / ai / external；表示原内容或判断的作者，不是文件写入者 |
 | basis | user_statement / tool_observation / ai_inference / imported_source |
 | domains | 非空列表，采用下方领域标识 |
@@ -62,13 +62,19 @@ hypothesis 额外要求：
 
 本人假设与 AI 假设分别建档，保留初始来源。用户认可 AI 解释后，作者仍是 ai。只有经过讨论接受的假设可进入当前概况，且正文必须明确标注“假设/待验证”、依据与限制。用户认可不证明因果；根据支持材料、相反证据与替代解释更新 evidence_state。
 
+重要认识使用 [insight 模板](../assets/templates/insight.md)：`context` 描述适用情境，`valid_from/valid_until` 限定适用时期（未知为 null），`evidence_refs` 至少一条，`counterexample_refs`、`unknowns` 与 `revises` 保留反例、缺口和旧版关系。`user_endorsement` 与 `evidence_state` 分别表达本人是否认可、证据是否支持；认可不等于证实。新认识修订旧 insight/hypothesis 时，旧项须同时标 corrected 或 superseded。来源、适用范围与推断要在正文中可读，字段通过结构校验仍需人工核对语义。
+
+`evidence_refs` 和 `counterexample_refs` 只指向基础经历、观察、感受、观点、意向、决定、结果或纠错记录，不拿 AI 建议或另一条认识互相引用来冒充独立证据。
+
+重要 AI 建议使用 [recommendation 模板](../assets/templates/recommendation.md)：`context`、`evidence_refs`、`counterexample_refs`、`unknowns` 与原始 `expected_result` 记录当时依据、条件、限制和可观察预期；`adoption_state` 为 unknown/adopted/declined，未知不是拒绝或失败。采用或拒绝必须有 `adoption_ref` 指向用户自己的 decision/outcome；`process_refs`、`outcome_refs`、`side_effect_refs` 记录执行、结果和副作用，`revision_refs` 指向新的 insight，`revises` 指向已失效的旧建议。原始情境、依据与预期在同一建议中不可改写；新预期创建新版建议。状态变化仍须检查原消息，不能由工具自动判断用户意愿或建议成效。
+
 ## 案例、概况与报告
 
-case：`kind` 为 decision / state_change / improvement；`status` 为 open / observing / closed / paused。保留 `record_refs`、`user_hypothesis_refs`、`ai_hypothesis_refs`、`outcome_refs` 四个列表。结果先写成 outcome 基础记录，再加入案例的 outcome_refs。本人/AI 假设列表分别只引用对应作者的 hypothesis。
+case：`kind` 为 decision / state_change / improvement；`status` 为 open / observing / closed / paused。保留 `record_refs`、`user_hypothesis_refs`、`ai_hypothesis_refs`、`outcome_refs` 四个列表；新案例可另列 `insight_refs`、`recommendation_refs`。结果先写成 outcome 基础记录，再加入案例的 outcome_refs。本人/AI 假设列表分别只引用对应作者的 hypothesis。重要项目可选填 `purpose`、`investment_boundary`、`pause_condition`，记录为什么做、愿意投入多少和何时暂停；旧案例不强制补填。
 
 正文按 [案例模板](../assets/templates/case.md) 组织：当时情况与目标、当时信息与约束、选择理由、预期、实际过程、阶段及长期结果、支持与反对解释、下一步。只填真实知道的内容，事后回忆标注补充时间与不确定性，不伪装为事前信息。观察期限/下一次检查时间以 followup 为准，不在案例维护另一份可编辑日程。
 
-summary：`kind: current`，以 `record_refs` 指向有效依据。概况不得依赖 corrected/superseded 记录，假设必须 user_endorsement=accepted 且显著保留假设身份。disputed 信息如需提及应标明争议，不能写成定论。
+summary：`kind: current`，以 `record_refs` 指向有效依据。概况不得依赖 corrected/superseded 记录；假设和 insight 不得以 contradicted 状态晋升，必须 user_endorsement=accepted 且正文显著保留暂定身份。AI recommendation 不能作为当前个人事实的依据。disputed 信息如需提及应标明争议，不能写成定论。
 
 report：`kind: periodic`，保存 `record_refs`；正文标明覆盖时期、资料范围、旧认识、变化、结果与缺口。历史报告可以引用当时观点，但更新说明应指出已知纠错，避免旧错误继续成为建议依据。
 
@@ -77,6 +83,8 @@ current 和报告生成前检查来源及状态。它们是可追溯的整理结
 ## 更新、纠错、检索
 
 记录变化：新增观点记录，关联前项；旧项可置 superseded，保留当时有效的时间与原因。纠错：旧项标 corrected，新增 correction 说明正确内容与依据；同一变更包修正依赖旧错误的当前概况，并检查案例与报告。来源冲突未解决时用 disputed，不自动相信较新的说法。
+
+`records.py impact --root ROOT --record-id ID` 列出结构化反向引用和正文中的精确 ID 命中。纠错/废止的保存回执也会给出 `review_required` 清单，供执行者逐项检查案例、报告、认识及建议；当前概况若仍引用失效或被反证的记录则拒绝保存。此清单不会自动发现改写后的措辞、外部发布内容或语义上受影响但未引用 ID 的叙述，仍须人工检索和判断。
 
 更新已存在文件必须提供旧文件内容的 SHA-256，先检查其他任务是否修改。全局引用检查在整个候选变更包上运行，因此可同时创建相互关联的记录和案例。结构校验失败先修复，不跳过。
 

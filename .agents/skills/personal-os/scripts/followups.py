@@ -261,8 +261,12 @@ def due(root, at=None):
             if meta["status"] == "closed" or scheduled is None:
                 continue
             if aware(scheduled) <= now:
-                base["due"].append({key: meta[key] for key in
-                                    ("id", "case_id", "question", "status", "contact_state", "answer_state", "next_check_at")})
+                item = {key: meta[key] for key in
+                        ("id", "case_id", "question", "status", "contact_state", "answer_state", "next_check_at")}
+                item["known_outcome_refs"] = list(meta.get("outcome_refs", []))
+                item["last_answered_at"] = meta.get("last_answered_at")
+                item["recommendation_refs"] = list(meta.get("recommendation_refs", []))
+                base["due"].append(item)
         except (ValueError, KeyError, TypeError) as exc:
             invalid.append({"path": str(path.relative_to(Path(root))), "error": str(exc)})
     return dict(base, status="ready" if not invalid else "needs_review", invalid=invalid)

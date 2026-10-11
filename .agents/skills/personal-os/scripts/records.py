@@ -28,7 +28,7 @@ DOMAINS = {
 }
 KINDS = {
     "experience", "observation", "feeling", "view", "intention", "decision",
-    "hypothesis", "outcome", "correction",
+    "hypothesis", "outcome", "correction", "insight", "recommendation",
 }
 PATHS = {
     "record": r"data/records/(\d{4}-\d{2})/([a-z0-9][a-z0-9-]{0,95})\.md",
@@ -173,6 +173,11 @@ def validate_document(meta, body, path=None):
         elif len(values) != len(set(values)):
             errors.append(f"{field} contains duplicate IDs")
 
+    def strings(field):
+        values = meta.get(field)
+        if not isinstance(values, list) or any(not _nonempty(v) for v in values):
+            errors.append(f"{field} must be a list of nonempty strings")
+
     if document_type == "record":
         choice("kind", KINDS)
         choice("author", {"user", "ai", "external"})
@@ -229,11 +234,55 @@ def validate_document(meta, body, path=None):
         if meta.get("kind") == "hypothesis":
             choice("user_endorsement", {"pending", "accepted", "rejected"})
             choice("evidence_state", {"untested", "supported", "mixed", "contradicted", "inconclusive"})
+        if meta.get("kind") == "insight":
+            if meta.get("author") not in {"user", "ai"}:
+                errors.append("insight author must be user or ai")
+            if not _nonempty(meta.get("context")):
+                errors.append("insight context is required")
+            for field in ("valid_from", "valid_until"):
+                if field not in meta or (meta[field] is not None and not _temporal(meta[field])):
+                    errors.append(f"{field} must be an ISO date/time or null")
+            start, end = meta.get("valid_from"), meta.get("valid_until")
+            if _aware(start) and _aware(end):
+                if datetime.fromisoformat(start.replace("Z", "+00:00")) > datetime.fromisoformat(end.replace("Z", "+00:00")):
+                    errors.append("valid_from cannot follow valid_until")
+            elif isinstance(start, str) and isinstance(end, str) and len(start) == len(end) and len(start) in {7, 10} and start > end:
+                errors.append("valid_from cannot follow valid_until")
+            choice("user_endorsement", {"pending", "accepted", "rejected"})
+            choice("evidence_state", {"untested", "supported", "mixed", "contradicted", "inconclusive"})
+            for field in ("evidence_refs", "counterexample_refs", "revises"):
+                refs(field)
+            if meta.get("evidence_refs") == []:
+                errors.append("insight requires evidence_refs")
+            strings("unknowns")
+        if meta.get("kind") == "recommendation":
+            if meta.get("author") != "ai" or meta.get("basis") != "ai_inference":
+                errors.append("recommendation must remain an AI inference")
+            for field in ("context", "expected_result"):
+                if not _nonempty(meta.get(field)):
+                    errors.append(f"recommendation {field} is required")
+            choice("adoption_state", {"unknown", "adopted", "declined"})
+            adoption_ref = meta.get("adoption_ref")
+            if meta.get("adoption_state") == "unknown" and adoption_ref is not None:
+                errors.append("unknown adoption cannot have adoption_ref")
+            if meta.get("adoption_state") in {"adopted", "declined"} and (not isinstance(adoption_ref, str) or not ID.fullmatch(adoption_ref)):
+                errors.append("adopted/declined recommendation requires adoption_ref")
+            for field in ("evidence_refs", "counterexample_refs", "process_refs", "outcome_refs", "side_effect_refs", "revision_refs", "revises"):
+                refs(field)
+            if meta.get("evidence_refs") == []:
+                errors.append("recommendation requires evidence_refs")
+            strings("unknowns")
     elif document_type == "case":
         choice("kind", {"decision", "state_change", "improvement"})
         choice("status", {"open", "observing", "closed", "paused"})
         for field in ("record_refs", "user_hypothesis_refs", "ai_hypothesis_refs", "outcome_refs"):
             refs(field)
+        for field in ("insight_refs", "recommendation_refs"):
+            if field in meta:
+                refs(field)
+        for field in ("purpose", "investment_boundary", "pause_condition"):
+            if field in meta and meta[field] is not None and not _nonempty(meta[field]):
+                errors.append(f"{field} must be a nonempty string or null")
     elif document_type in {"summary", "report"}:
         choice("kind", {"current" if document_type == "summary" else "periodic"})
         refs("record_refs")
@@ -257,6 +306,8 @@ def validate_document(meta, body, path=None):
         if type(meta.get("cadence_days")) is not int or meta["cadence_days"] != 7:
             errors.append("cadence_days must be 7")
         refs("outcome_refs")
+        if "recommendation_refs" in meta:
+            refs("recommendation_refs")
         if meta.get("answer_state") in ("partial", "complete") and not meta.get("outcome_refs"):
             errors.append("Partial/complete answer requires outcome_refs")
     return errors
@@ -322,16 +373,12 @@ def _validate_snapshot(documents):
     if errors:
         return errors
     for path, (meta, _) in documents.items():
-        fields = {
-            "record": ("related",),
-            "case": ("record_refs", "user_hypothesis_refs", "ai_hypothesis_refs", "outcome_refs"),
-            "followup": ("outcome_refs",),
-            "summary": ("record_refs",),
-            "report": ("record_refs",),
-        }[meta["document_type"]]
+        fields = _reference_fields(meta)
         links = [(field, value) for field in fields for value in meta[field]]
         if meta["document_type"] == "followup":
             links.append(("case_id", meta["case_id"]))
+        if meta["document_type"] == "record" and meta.get("kind") == "recommendation" and meta.get("adoption_ref") is not None:
+            links.append(("adoption_ref", meta["adoption_ref"]))
         for field, value in links:
             target = by_id.get(value)
             if target is None:
@@ -339,10 +386,31 @@ def _validate_snapshot(documents):
                 continue
             if field == "case_id" and target["document_type"] != "case":
                 errors.append(f"{path}: case_id must reference a case")
-            if field != "related" and field != "case_id" and target["document_type"] != "record":
+            if field not in {"related", "case_id"} and target["document_type"] != "record":
                 errors.append(f"{path}: {field} must reference base records")
-            if field == "outcome_refs" and target.get("kind") != "outcome":
+            if field in {"outcome_refs", "side_effect_refs"} and target.get("kind") != "outcome":
                 errors.append(f"{path}: outcome_refs must reference outcome records")
+            if field in {"evidence_refs", "counterexample_refs"} and target.get("kind") not in {
+                    "experience", "observation", "feeling", "view", "intention", "decision", "outcome", "correction"}:
+                errors.append(f"{path}: {field} must reference base evidence, not an AI claim")
+            if field == "process_refs" and target.get("kind") not in {"experience", "observation", "decision", "outcome"}:
+                errors.append(f"{path}: process_refs must reference an observed process")
+            if field == "adoption_ref" and (target.get("author") != "user" or target.get("kind") not in {"decision", "outcome"}):
+                errors.append(f"{path}: adoption_ref must reference a user decision or outcome")
+            if field == "recommendation_refs" and target.get("kind") != "recommendation":
+                errors.append(f"{path}: recommendation_refs must reference recommendations")
+            if field in {"insight_refs", "revision_refs"} and target.get("kind") != "insight":
+                errors.append(f"{path}: {field} must reference insights")
+            if field == "revises":
+                allowed = {"recommendation"} if meta.get("kind") == "recommendation" else {"insight", "hypothesis"}
+                if target.get("kind") not in allowed:
+                    errors.append(f"{path}: revises must reference a prior {meta.get('kind')} claim")
+                if target.get("status") not in {"corrected", "superseded"}:
+                    errors.append(f"{path}: revised record {value} must be corrected or superseded")
+            if (field in {"evidence_refs", "counterexample_refs"}
+                    and meta.get("status") not in {"corrected", "superseded"}
+                    and target.get("status") in {"corrected", "superseded"}):
+                errors.append(f"{path}: {field} cannot rely on invalidated record {value}")
             if field in {"user_hypothesis_refs", "ai_hypothesis_refs"}:
                 expected_author = "user" if field.startswith("user_") else "ai"
                 if target.get("kind") != "hypothesis" or target.get("author") != expected_author:
@@ -352,7 +420,71 @@ def _validate_snapshot(documents):
                     errors.append(f"{path}: Current summary references invalidated record {value}")
                 if target.get("kind") == "hypothesis" and target.get("user_endorsement") != "accepted":
                     errors.append(f"{path}: Current summary references unaccepted hypothesis {value}")
+                if target.get("kind") in {"hypothesis", "insight"} and target.get("evidence_state") == "contradicted":
+                    errors.append(f"{path}: Current summary references contradicted claim {value}")
+                if target.get("kind") == "insight" and target.get("user_endorsement") != "accepted":
+                    errors.append(f"{path}: Current summary references unaccepted insight {value}")
+                if target.get("kind") == "recommendation":
+                    errors.append(f"{path}: Current summary cannot treat recommendation as personal fact {value}")
     return errors
+
+
+def _reference_fields(meta):
+    fields = {
+        "record": ["related"],
+        "case": ["record_refs", "user_hypothesis_refs", "ai_hypothesis_refs", "outcome_refs"],
+        "followup": ["outcome_refs"],
+        "summary": ["record_refs"],
+        "report": ["record_refs"],
+    }[meta["document_type"]]
+    if meta["document_type"] == "record" and meta.get("kind") == "insight":
+        fields += ["evidence_refs", "counterexample_refs", "revises"]
+    if meta["document_type"] == "record" and meta.get("kind") == "recommendation":
+        fields += ["evidence_refs", "counterexample_refs", "process_refs", "outcome_refs", "side_effect_refs", "revision_refs", "revises"]
+    if meta["document_type"] == "case":
+        fields += [field for field in ("insight_refs", "recommendation_refs") if field in meta]
+    if meta["document_type"] == "followup" and "recommendation_refs" in meta:
+        fields.append("recommendation_refs")
+    return fields
+
+
+def _impact_from_snapshot(snapshot, record_id):
+    matches = [(path, meta) for path, (meta, _) in snapshot.items() if meta.get("id") == record_id]
+    if not matches:
+        raise ValueError(f"Unknown record ID: {record_id}")
+    target_path, target = matches[0]
+    references, review_required = [], []
+    for path, (meta, body) in sorted(snapshot.items()):
+        if path == target_path:
+            continue
+        fields = [field for field in _reference_fields(meta) if record_id in meta[field]]
+        if meta.get("case_id") == record_id:
+            fields.append("case_id")
+        if meta.get("adoption_ref") == record_id:
+            fields.append("adoption_ref")
+        body_mention = record_id in body
+        if fields or body_mention:
+            item = {"path": path, "document_type": meta["document_type"],
+                    "kind": meta.get("kind"), "fields": fields, "body_mention": body_mention}
+            references.append(item)
+            if not (meta.get("kind") == "correction" and fields == ["related"] and not body_mention):
+                review_required.append(item)
+    return {"record_id": record_id, "status": target.get("status"), "references": references,
+            "review_required": review_required if target.get("status") in {"corrected", "superseded"} else [],
+            "limitation": "Reference and exact-text scan only; inspect meaning, paraphrases and external outputs manually."}
+
+
+def impact(root, record_id):
+    if not isinstance(record_id, str) or not ID.fullmatch(record_id):
+        raise ValueError("record_id must be a safe ID")
+    root = _root(root)
+    with _lock(root):
+        _require_recovered(root)
+        snapshot = _snapshot(root)
+    errors = _validate_snapshot(snapshot)
+    if errors:
+        raise ValueError("\n".join(errors))
+    return _impact_from_snapshot(snapshot, record_id)
 
 
 def validate_root(root):
@@ -457,6 +589,16 @@ def _prepare(root, bundle, operation_id, fingerprint):
             original_meta = snapshot[relative][0]
             if meta.get("id") != original_meta.get("id") or meta.get("document_type") != original_meta.get("document_type"):
                 raise ValueError("Cannot change a document's id or document_type")
+            if original_meta.get("kind") in {"insight", "recommendation"}:
+                if meta.get("kind") != original_meta["kind"]:
+                    raise ValueError("Cannot change an insight or recommendation kind")
+                if original_meta["kind"] == "recommendation":
+                    for field in ("context", "expected_result", "evidence_refs"):
+                        if meta.get(field) != original_meta.get(field):
+                            raise ValueError(f"Original recommendation {field} cannot change; create a revision")
+                    old_adoption = original_meta.get("adoption_ref")
+                    if old_adoption and meta.get("adoption_ref") != old_adoption and old_adoption not in meta.get("related", []):
+                        raise ValueError("Keep the previous adoption_ref in related when adoption changes")
             meta["recorded_at"] = original_meta.get("recorded_at")
         else:
             meta["recorded_at"] = timestamp
@@ -523,6 +665,15 @@ def apply_bundle(root, bundle, operation_id):
             "local_verified_at": _now(), "idempotent_replay": False,
             "files": [{"path": w["path"], "sha256": w["new_sha256"]} for w in journal["writes"]],
         }
+        invalidated = []
+        for write in journal["writes"]:
+            meta, _ = read_document(_checked_path(root, write["path"], personal=True))
+            if meta.get("document_type") == "record" and meta.get("status") in {"corrected", "superseded"}:
+                invalidated.append(meta["id"])
+        if invalidated:
+            snapshot = _snapshot(root)
+            receipt["review_required"] = [_impact_from_snapshot(snapshot, record_id)
+                                          for record_id in invalidated]
         journal.update(state="completed", receipt=receipt)
         _atomic_write(journal_path, (_json(journal) + "\n").encode("utf-8"))
         return receipt
@@ -573,7 +724,7 @@ def search(root, query, include_history=False):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ("validate", "apply", "index", "search"):
+    for name in ("validate", "apply", "index", "search", "impact"):
         command = sub.add_parser(name)
         command.add_argument("--root", required=True)
         if name == "apply":
@@ -582,6 +733,8 @@ def main(argv=None):
         elif name == "search":
             command.add_argument("--query", required=True)
             command.add_argument("--include-history", action="store_true")
+        elif name == "impact":
+            command.add_argument("--record-id", required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "validate":
@@ -592,8 +745,10 @@ def main(argv=None):
             result = {"ok": True, **apply_bundle(args.root, bundle, args.operation_id)}
         elif args.command == "index":
             result = {"ok": True, **build_index(args.root)}
-        else:
+        elif args.command == "search":
             result = {"ok": True, **search(args.root, args.query, args.include_history)}
+        else:
+            result = {"ok": True, **impact(args.root, args.record_id)}
     except (OSError, ValueError, TypeError, KeyError, yaml.YAMLError) as exc:
         result = {"ok": False, "error": str(exc)}
     print(json.dumps(result, ensure_ascii=False, indent=2))

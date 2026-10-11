@@ -85,6 +85,17 @@ class FollowupTests(unittest.TestCase):
         self.create(expected_result_at="2026-10-14T22:00:00+08:00")
         self.assertEqual(self.meta()["next_check_at"], "2026-10-15T21:00:00+08:00")
 
+    def test_due_exposes_known_partial_result_without_closing_long_observation(self):
+        self.create()
+        self.outcome()
+        followups.reply(self.root, "followup-one", "partial", "partial-one", outcome_ids=["outcome-one"])
+        followup = self.meta()
+        self.assertEqual(followup["status"], "active")
+        due = followups.due(self.root, followup["next_check_at"])["due"][0]
+        self.assertEqual(due["answer_state"], "partial")
+        self.assertEqual(due["known_outcome_refs"], ["outcome-one"])
+        self.assertEqual(due["recommendation_refs"], [])
+
     def test_confirmed_delivery_required_and_no_reply_does_not_mean_no_result(self):
         self.create()
         with self.assertRaises(ValueError):

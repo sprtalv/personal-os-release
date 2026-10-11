@@ -14,7 +14,9 @@ This public repository contains a workflow and local scripts. It contains no per
 3. Search current and historical records before adding or changing evidence. Read source and linked records; keyword hits alone are insufficient. See [retrieval](references/retrieval.md).
 4. For a new fact, plan, or correction, follow [capture](references/capture.md) and the [data contract](references/memory.md). For an observable outcome, create a specific question using [follow-up](references/followup.md).
 5. After an outcome, first save an outcome record, then link the case and follow-up. Reconsider the expectation, contrary evidence, and current summaries. See [review](references/review.md).
+   For an important, reusable understanding or AI recommendation, use the [insight](assets/templates/insight.md) or [recommendation](assets/templates/recommendation.md) contract. Preserve evidence, scope, counterexamples, adoption state and revisions; do not turn agreement into proof.
 6. For daily planning, use [daily](references/daily.md). Confirm live tasks and calendar events through separately authorized tools before changing external arrangements.
+   When action is wanted, offer a visible 2–5 minute first step and an optional situation-to-action cue. After interruption, let the user restart small, narrow the goal or pause without penalty.
 7. Validate candidate records and report actual results. Use scripts only with an explicitly chosen private data root and appropriate authorization. See [operations](references/operations.md).
 
 ## Files and limits
