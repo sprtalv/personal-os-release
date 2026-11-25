@@ -1,0 +1,857 @@
+{
+  "schema_version": 1,
+  "id": "strength-physique-performance",
+  "version": "1.0.0",
+  "rule_version": "2.0.0",
+  "classification": "example_program",
+  "sequence": [
+    "A",
+    "B",
+    "C"
+  ],
+  "target_sessions_per_week": 3,
+  "observe_weeks": 8,
+  "hard_duration_limit_minutes": null,
+  "templates": {
+    "A": [
+      {
+        "role": "A1",
+        "name": "平板杠铃卧推",
+        "variant": "barbell-bench",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": true,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          6,
+          8
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          3
+        ],
+        "initial_rir": [
+          2,
+          3
+        ],
+        "rest_seconds": [
+          180,
+          240
+        ],
+        "starting_load": null,
+        "order": 1
+      },
+      {
+        "role": "APU",
+        "name": "引体向上",
+        "variant": "pull-up",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": null,
+        "seconds": null,
+        "rir": null,
+        "initial_rir": null,
+        "rest_seconds": null,
+        "starting_load": null,
+        "order": 1.5,
+        "effort": "接近力竭",
+        "progression": "owner_fixed_pullup"
+      },
+      {
+        "role": "A2",
+        "name": "中立握高位下拉",
+        "variant": "neutral-pulldown",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          8,
+          12
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 2
+      },
+      {
+        "role": "A3",
+        "name": "站姿杠铃严格推举",
+        "variant": "strict-press",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": true,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          6,
+          8
+        ],
+        "seconds": null,
+        "rir": [
+          3,
+          3
+        ],
+        "initial_rir": [
+          3,
+          3
+        ],
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 3
+      },
+      {
+        "role": "A4",
+        "name": "坐姿绳索划船",
+        "variant": "seated-cable-row",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          8,
+          12
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 4
+      },
+      {
+        "role": "A5",
+        "name": "上斜哑铃卧推",
+        "variant": "incline-dumbbell-bench",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          8,
+          12
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 5
+      },
+      {
+        "role": "A6",
+        "name": "绳索侧平举",
+        "variant": "cable-lateral-raise",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": false,
+        "per_side": true,
+        "sets": 4,
+        "initial_sets": 4,
+        "reps": [
+          12,
+          20
+        ],
+        "seconds": null,
+        "rir": [
+          1,
+          2
+        ],
+        "initial_rir": [
+          1,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          120
+        ],
+        "starting_load": null,
+        "order": 6
+      },
+      {
+        "role": "A7",
+        "name": "反向蝴蝶机",
+        "variant": "reverse-pec-deck",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          12,
+          20
+        ],
+        "seconds": null,
+        "rir": [
+          1,
+          2
+        ],
+        "initial_rir": [
+          1,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          120
+        ],
+        "starting_load": null,
+        "order": 7
+      },
+      {
+        "role": "A8",
+        "name": "绳索卷腹",
+        "variant": "cable-crunch",
+        "domain": "core",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          10,
+          15
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          120
+        ],
+        "starting_load": null,
+        "order": 8
+      }
+    ],
+    "C": [
+      {
+        "role": "C1",
+        "name": "站姿杠铃严格推举",
+        "variant": "strict-press",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": true,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          4,
+          6
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          3
+        ],
+        "initial_rir": [
+          2,
+          3
+        ],
+        "rest_seconds": [
+          180,
+          240
+        ],
+        "starting_load": null,
+        "order": 1
+      },
+      {
+        "role": "CPU",
+        "name": "引体向上",
+        "variant": "pull-up",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": null,
+        "seconds": null,
+        "rir": null,
+        "initial_rir": null,
+        "rest_seconds": null,
+        "starting_load": null,
+        "order": 1.5,
+        "effort": "接近力竭",
+        "progression": "owner_fixed_pullup"
+      },
+      {
+        "role": "C2",
+        "name": "中立握高位下拉",
+        "variant": "neutral-pulldown",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          8,
+          12
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 2
+      },
+      {
+        "role": "C3",
+        "name": "平板杠铃卧推",
+        "variant": "barbell-bench",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": true,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          6,
+          8
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          3
+        ],
+        "initial_rir": [
+          2,
+          3
+        ],
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 3
+      },
+      {
+        "role": "C4",
+        "name": "坐姿绳索划船",
+        "variant": "seated-cable-row",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          8,
+          12
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 4
+      },
+      {
+        "role": "C5",
+        "name": "蝴蝶机夹胸",
+        "variant": "pec-deck-fly",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          10,
+          15
+        ],
+        "seconds": null,
+        "rir": [
+          1,
+          2
+        ],
+        "initial_rir": [
+          1,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          120
+        ],
+        "starting_load": null,
+        "order": 5
+      },
+      {
+        "role": "C6",
+        "name": "绳索侧平举",
+        "variant": "cable-lateral-raise",
+        "domain": "upper_push",
+        "kind": "resistance",
+        "main": false,
+        "per_side": true,
+        "sets": 4,
+        "initial_sets": 4,
+        "reps": [
+          12,
+          20
+        ],
+        "seconds": null,
+        "rir": [
+          1,
+          2
+        ],
+        "initial_rir": [
+          1,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          120
+        ],
+        "starting_load": null,
+        "order": 6
+      },
+      {
+        "role": "C7",
+        "name": "反向蝴蝶机",
+        "variant": "reverse-pec-deck",
+        "domain": "upper_pull",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          12,
+          20
+        ],
+        "seconds": null,
+        "rir": [
+          1,
+          2
+        ],
+        "initial_rir": [
+          1,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          120
+        ],
+        "starting_load": null,
+        "order": 7
+      },
+      {
+        "role": "C8",
+        "name": "侧桥",
+        "variant": "side-plank",
+        "domain": "core",
+        "kind": "isometric",
+        "main": false,
+        "per_side": true,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": null,
+        "seconds": [
+          20,
+          40
+        ],
+        "rir": null,
+        "initial_rir": null,
+        "rest_seconds": [
+          60,
+          90
+        ],
+        "starting_load": null,
+        "order": 9
+      },
+      {
+        "role": "C9",
+        "name": "绳索卷腹",
+        "variant": "cable-crunch",
+        "domain": "core",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          10,
+          15
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          120
+        ],
+        "starting_load": null,
+        "order": 8
+      }
+    ],
+    "B": [
+      {
+        "role": "L3HP",
+        "name": "悬垂奥举高拉",
+        "variant": "hang-high-pull",
+        "domain": "lower_power",
+        "kind": "technique",
+        "main": false,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          3,
+          3
+        ],
+        "seconds": null,
+        "rir": null,
+        "initial_rir": null,
+        "rest_seconds": [
+          120,
+          180
+        ],
+        "starting_load": null,
+        "order": 1
+      },
+      {
+        "role": "L3SQ",
+        "name": "高杠深蹲",
+        "variant": "high-bar-squat",
+        "domain": "lower_strength",
+        "kind": "resistance",
+        "main": true,
+        "per_side": false,
+        "sets": 3,
+        "initial_sets": 3,
+        "reps": [
+          4,
+          6
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          180,
+          240
+        ],
+        "starting_load": null,
+        "order": 2
+      },
+      {
+        "role": "L3DL",
+        "name": "传统硬拉",
+        "variant": "conventional-deadlift",
+        "domain": "lower_strength",
+        "kind": "resistance",
+        "main": true,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          3,
+          5
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          3
+        ],
+        "initial_rir": [
+          2,
+          3
+        ],
+        "rest_seconds": [
+          180,
+          240
+        ],
+        "starting_load": null,
+        "order": 3
+      },
+      {
+        "role": "L3SS",
+        "name": "扶稳分腿蹲",
+        "variant": "supported-split-squat",
+        "domain": "lower_strength",
+        "kind": "resistance",
+        "main": false,
+        "per_side": true,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          6,
+          8
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          90,
+          120
+        ],
+        "starting_load": null,
+        "order": 4
+      },
+      {
+        "role": "L3LC",
+        "name": "腿弯举",
+        "variant": "leg-curl",
+        "domain": "lower_strength",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          8,
+          12
+        ],
+        "seconds": null,
+        "rir": [
+          1,
+          2
+        ],
+        "initial_rir": [
+          1,
+          2
+        ],
+        "rest_seconds": [
+          90,
+          120
+        ],
+        "starting_load": null,
+        "order": 5
+      },
+      {
+        "role": "L3CR",
+        "name": "直膝提踵",
+        "variant": "straight-knee-calf-raise",
+        "domain": "lower_control",
+        "kind": "resistance",
+        "main": false,
+        "per_side": false,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": [
+          10,
+          15
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          2
+        ],
+        "initial_rir": [
+          2,
+          2
+        ],
+        "rest_seconds": [
+          60,
+          90
+        ],
+        "starting_load": null,
+        "order": 6
+      },
+      {
+        "role": "L3CO",
+        "name": "膝支撑Copenhagen侧撑",
+        "variant": "knee-supported-copenhagen",
+        "domain": "core",
+        "kind": "isometric",
+        "main": false,
+        "per_side": true,
+        "sets": 2,
+        "initial_sets": 2,
+        "reps": null,
+        "seconds": [
+          15,
+          25
+        ],
+        "rir": null,
+        "initial_rir": null,
+        "rest_seconds": [
+          60,
+          90
+        ],
+        "starting_load": null,
+        "order": 7
+      }
+    ]
+  },
+  "initial_selection": {},
+  "warmup": [
+    "一般活动、关节与动作准备",
+    "各主要动作分别逐级专项热身；空杆过重用更轻可控器械",
+    "合格校准试组可计工作组；热身不计工作组"
+  ],
+  "standards": {
+    "barbell-bench": "固定握距、触胸/幅度、可控下放及支撑；安全架/保护人到位",
+    "strict-press": "站姿、无蹬腿、固定幅度；动作变化重新建立可比条件"
+  },
+  "adoption_note": "通用可编辑示例；训练重量需现场校准。",
+  "scheduling_note": "A/B/C保持唯一滚动主循环；S仅明确选择且恢复门槛通过时额外使用，不创建日历或补课式训练债。",
+  "optional_templates": {
+    "S": [
+      {
+        "role": "S1",
+        "name": "高杠深蹲",
+        "variant": "high-bar-squat",
+        "domain": "lower_strength",
+        "kind": "resistance",
+        "main": true,
+        "per_side": false,
+        "sets": 4,
+        "initial_sets": 4,
+        "reps": [
+          4,
+          6
+        ],
+        "initial_reps": [
+          5,
+          5
+        ],
+        "seconds": null,
+        "rir": [
+          2,
+          3
+        ],
+        "initial_rir": [
+          2,
+          3
+        ],
+        "rest_seconds": [
+          180,
+          240
+        ],
+        "starting_load": null,
+        "order": 1
+      }
+    ]
+  },
+  "optional_day": {
+    "template": "S",
+    "activation": "explicit_user_choice_each_occurrence",
+    "sequence_effect": "none",
+    "sets_are_optional_not_debt": true,
+    "spacing_hours_with_other_heavy_lower": 72,
+    "spacing_classification": "conservative_operational_choice_not_safety_guarantee",
+    "readiness_keys": [
+      "shoulder_discomfort_resolved",
+      "pain_free_bar_position",
+      "walking_recovered",
+      "sports_load_compatible"
+    ],
+    "safety_setup": [
+      "保护架实际到位",
+      "逐级深蹲专项热身",
+      "无痛持杠与受控下蹲"
+    ],
+    "first_exposure": "4×5，增加组数时不自动加重量；第4组质量下降可减重或结束于3组",
+    "optional_accessories": [
+      {
+        "name": "轻松踝活动",
+        "dose": "1–2轮",
+        "intensity": "low"
+      },
+      {
+        "name": "仰卧死虫",
+        "dose": "2×6–8次/侧",
+        "intensity": "controlled"
+      }
+    ],
+    "not_included": [
+      "高拉",
+      "硬拉",
+      "额外提踵",
+      "场地跑跳",
+      "高疲劳慢离心或跳落冲击"
+    ],
+    "weekly_direct_squat_sets_if_B_and_S_both_done": 7,
+    "outcome_limit": "受控下蹲不等于专门落地吸收训练，也不保证防伤。",
+    "programming_basis": "individual_programming_choice: 4 sets is an inference, not a research-proven single-day optimum; 3/6/9 weekly-set trial split sessions across three days and 1/4/8 set study used failure training unlike this RIR prescription."
+  }
+}

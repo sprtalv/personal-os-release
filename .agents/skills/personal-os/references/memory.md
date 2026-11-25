@@ -89,3 +89,6 @@ current 和报告生成前检查来源及状态。它们是可追溯的整理结
 更新已存在文件必须提供旧文件内容的 SHA-256，先检查其他任务是否修改。全局引用检查在整个候选变更包上运行，因此可同时创建相互关联的记录和案例。结构校验失败先修复，不跳过。
 
 日常检索默认排除 corrected/superseded；历史问题显式启用历史检索并标注其时期和状态。检索步骤见 [retrieval.md](retrieval.md)。
+
+## Optional event types
+A record can carry `training_event` or `skin_event`. The respective module validates it; both reuse the same record store. A computed recommendation or summary is never an observed event.

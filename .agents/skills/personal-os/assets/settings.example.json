@@ -6,5 +6,10 @@
   "evening_time": null,
   "weekly_review": null,
   "followup_default_days": 7,
-  "repository": {"remote": null, "branch": null}
+  "repository": {
+    "remote": null,
+    "branch": null
+  },
+  "monthly_report": null,
+  "evening_interview_minutes": 10
 }

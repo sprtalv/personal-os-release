@@ -26,3 +26,9 @@ The private data root may contain data/records/, data/current/, data/cases/, dat
 From this Skill directory, run python scripts/records.py --help and python scripts/followups.py --help for commands. records.py search is keyword-based; apply makes local changes. followups.py due only lists due questions. Neither script sends messages or schedules runs. publish.py is optional for a separately configured private Git data root; inspect its plan before any --execute use. A local save is not remote verification.
 
 An assistant may follow this Skill when its host actually makes the file accessible. Cloning it does not prove automatic invocation, continuous chat capture, proactive delivery, backup, or improved long-term advice.
+
+## Optional workflows
+- [Connect a host](references/host-entry.md): conversational capture, daily plan approval, evening check-in and weekly/monthly reviews.
+- [Build a revisable self-model](references/personal-growth.md) from observations, interpretations, counterexamples and corrections.
+- [Training and nutrition](references/training.md): log actual sets, prepare a session, review progression and summarize reported meals or body measurements.
+- [Skin log](references/skin-health.md): distinguish the routine from actual use, track dated symptoms and review trends. Do not diagnose or change treatment.

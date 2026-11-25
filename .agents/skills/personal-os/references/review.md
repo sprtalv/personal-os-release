@@ -50,3 +50,6 @@
 结果先进入基础记录，再更新案例。逐个检验关联的用户假设与 AI 假设，允许一个结果支持一方而反驳另一方。保留原判断，不事后改成“早就知道”。
 
 短期结果成熟而长期影响未知时，关闭已完成问题并继续长期跟进。依 [followup.md](followup.md) 处理结果、改期与停止。检查当前概况、经验规则和历史报告是否需要明确纠错或更新说明。
+
+## Optional review sections
+Include only modules with relevant reports. Use training or skin-log period summaries and keep their source IDs; missing observations are not inactivity. For personal-growth reviews, use [the self-model](personal-growth.md) to compare earlier assumptions with new actions, results and counterexamples. Monthly reviews can summarize what changed or paid off without reprinting weekly logs.

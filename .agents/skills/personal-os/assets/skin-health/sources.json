@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-29",
+  "sources": [
+    {
+      "id": "nice-ng198",
+      "title": "NICE NG198 Recommendations",
+      "url": "https://www.nice.org.uk/guidance/ng198/chapter/Recommendations",
+      "scope": "1.5.5/1.5.7/1.5.12: 6–8周可见改善、渐进起步候选、约12周复核；1.4转诊、1.7维持非人人需要"
+    },
+    {
+      "id": "aad-care",
+      "title": "AAD acne skin care tips",
+      "url": "https://www.aad.org/public/diseases/acne/skin-care/tips",
+      "scope": "温和非磨砂清洁、广谱SPF≥30及遮阳"
+    },
+    {
+      "id": "aad-moisturizer",
+      "title": "AAD moisturizer and acne",
+      "url": "https://www.aad.org/public/diseases/acne/skin-care/moisturizer",
+      "scope": "保湿；水杨酸/BPO/阿达帕林可干燥刺激"
+    },
+    {
+      "id": "medline-adapalene",
+      "title": "MedlinePlus Adapalene",
+      "url": "https://medlineplus.gov/druginfo/meds/a604001.html",
+      "scope": "不加量追求更快效果；刺激与严重过敏信号"
+    },
+    {
+      "id": "medline-bpo",
+      "title": "MedlinePlus Benzoyl Peroxide",
+      "url": "https://www.medlineplus.gov/druginfo/meds/a601026.html",
+      "scope": "用法与不良反应边界"
+    },
+    {
+      "id": "aad-photos",
+      "title": "AAD taking pictures of skin",
+      "url": "https://www.aad.org/public/fad/digital-health/taking-pictures-skin",
+      "scope": "照片标准化辅助观察"
+    }
+  ],
+  "management_not_guideline": [
+    "2–3天稳定讨论闸门",
+    "2–4周照片偏好",
+    "0–3自评分",
+    "每期5/7日覆盖比较阈值",
+    "一次只改一个变量以便解释"
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "version": "2.0.0",
+  "classification": "operational_rule",
+  "source": "generic training workflow defaults",
+  "consecutive_successes": 2,
+  "freshness_days": 14,
+  "upper_main_max_kg": 2.5,
+  "lower_main_max_kg": 5,
+  "max_increment_fraction": 0.1,
+  "upper_sets_added_per_session": 2,
+  "lower_sets_added_per_session": 1,
+  "minimum_exposures_for_phase": 2,
+  "plateau_exposures": 3,
+  "plateau_days": 14,
+  "question_cadence_days": 7,
+  "protein_g_kg": [
+    1.6,
+    2.0
+  ],
+  "weight_trend_min_days": 14,
+  "weight_week_min_samples": 3,
+  "proposed_extra_kcal": [
+    150,
+    200
+  ],
+  "weight_observation_fraction_per_week": [
+    0.001,
+    0.0025
+  ],
+  "whole_week_deload_set_reduction": [
+    0.3,
+    0.5
+  ],
+  "approval_required": [
+    "major_exercise_replacement",
+    "extra_volume",
+    "whole_week_deload",
+    "fixed_fourth_day",
+    "training_distribution",
+    "long_term_goal",
+    "diet_phase"
+  ],
+  "rule_order": [
+    "safety",
+    "validity_comparability",
+    "calibration",
+    "acute_adjustment",
+    "progression",
+    "maintain",
+    "review"
+  ],
+  "catalog": [
+    {
+      "rule_id": "safety",
+      "parameters": [
+        "rule_order"
+      ],
+      "applies_to": "all",
+      "basis": "general training workflow",
+      "reason": "症状及本人限制高于一切负荷进阶",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "consecutive_successes",
+      "parameters": [
+        "consecutive_successes"
+      ],
+      "applies_to": "same exercise role/device/scheme",
+      "basis": "general training workflow",
+      "reason": "两次稳定证据降低单次误估影响；不是普适生理阈值",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "step_limit",
+      "parameters": [
+        "upper_main_max_kg",
+        "lower_main_max_kg",
+        "max_increment_fraction"
+      ],
+      "applies_to": "available known load steps",
+      "basis": "general training workflow",
+      "reason": "选实际最小档，并用总量/比例封顶防异常跳档",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "freshness",
+      "parameters": [
+        "freshness_days"
+      ],
+      "applies_to": "comparable anchors",
+      "basis": "general training workflow",
+      "reason": "标需重验数据新鲜度；不是能力衰减",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "phase",
+      "parameters": [
+        "minimum_exposures_for_phase",
+        "upper_sets_added_per_session",
+        "lower_sets_added_per_session"
+      ],
+      "applies_to": "confirmed template execution and recovery",
+      "basis": "general training workflow",
+      "reason": "依据暴露/耐受，小幅补组；不按日历升级",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "plateau",
+      "parameters": [
+        "plateau_exposures",
+        "plateau_days"
+      ],
+      "applies_to": "same role comparable history",
+      "basis": "general training workflow",
+      "reason": "触发执行/恢复/饮食核查而非默认刺激不足",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "question_frequency",
+      "parameters": [
+        "question_cadence_days"
+      ],
+      "applies_to": "ordinary followup",
+      "basis": "general training workflow",
+      "reason": "先查答复和真实发送，7天避免重复追问",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "protein",
+      "parameters": [
+        "protein_g_kg"
+      ],
+      "applies_to": "reported adult weight range",
+      "basis": "general training workflow",
+      "reason": "个体起点，建议与真实摄入分开",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "body_trend",
+      "parameters": [
+        "weight_trend_min_days",
+        "weight_week_min_samples"
+      ],
+      "applies_to": "comparable morning measurements",
+      "basis": "general training workflow",
+      "reason": "保守采样门槛，不用一个体重推算增长率",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "energy",
+      "parameters": [
+        "proposed_extra_kcal",
+        "weight_observation_fraction_per_week"
+      ],
+      "applies_to": "2–3 weeks and adherence/performance reviewed",
+      "basis": "general training workflow",
+      "reason": "摄入增量为提议，不强制增重或自动减脂",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "deload",
+      "parameters": [
+        "whole_week_deload_set_reduction"
+      ],
+      "applies_to": "repeated multi-main decline with persistent recovery reports",
+      "basis": "general training workflow",
+      "reason": "整周方案需要确认，不诊断OTS",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    },
+    {
+      "rule_id": "permission",
+      "parameters": [
+        "approval_required"
+      ],
+      "applies_to": "outside current plan",
+      "basis": "general training workflow",
+      "reason": "超范围操作先具体提议，未知动作默认要求确认",
+      "version": "2.0.0",
+      "classification": "operational_rule"
+    }
+  ]
+}

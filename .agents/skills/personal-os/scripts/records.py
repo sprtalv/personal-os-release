@@ -310,6 +310,33 @@ def validate_document(meta, body, path=None):
             refs("recommendation_refs")
         if meta.get("answer_state") in ("partial", "complete") and not meta.get("outcome_refs"):
             errors.append("Partial/complete answer requires outcome_refs")
+    if "skin_event" in meta:
+        try:
+            from skin_health import validate_event
+            event = meta["skin_event"]
+            if document_type != "record":
+                raise ValueError("skin_event belongs only in a source record")
+            validate_event(event)
+            expected = ("user", "user_statement") if event["category"] == "user_reported" else ("ai", "ai_inference")
+            if (meta.get("author"), meta.get("basis")) != expected:
+                raise ValueError("skin evidence category disagrees with author/basis")
+            for ref in [event.get("corrects"), event.get("duplicate_of")] + event["data"].get("basis_refs", []):
+                if ref and ref not in meta.get("related", []):
+                    raise ValueError("skin evidence link must be in related")
+        except (ValueError, TypeError, AttributeError, KeyError) as exc:
+            errors.append("skin_event: " + str(exc))
+    if "training_event" in meta:
+        try:
+            from training_store import validate_event
+            event = meta["training_event"]
+            if document_type != "record":
+                raise ValueError("training_event belongs only in a source record")
+            if event.get("type") != "tombstone":
+                validate_event(event)
+            elif event.get("data") != {}:
+                raise ValueError("Privacy tombstone cannot retain event data")
+        except (ValueError, TypeError, AttributeError, KeyError) as exc:
+            errors.append("training_event: " + str(exc))
     return errors
 
 

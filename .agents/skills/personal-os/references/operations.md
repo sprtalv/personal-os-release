@@ -11,3 +11,6 @@ To write, read source material and relevant existing records first. Build a JSON
 followups.py due returns due questions; it does not notify anyone. mark-asked requires a real send reference. reply requires an independently saved outcome record for partial or complete results. Sending, scheduling, chat access, task/calendar integration, and backups need separate host capabilities and authorization.
 
 publish.py is optional for a separately configured private Git data root. Its invocation without --execute is a plan; --execute may commit and push selected private data files. Use it only within authorized scope and verify its remote readback receipt. Never configure this public source repository as a personal-data destination.
+
+## Connect a host or back up a private vault
+See [host setup](host-entry.md) for optional scheduling and delivery. To keep an independent Git backup, run `git bundle create /path/outside-the-vault/backup.bundle --all` from the private vault, verify it using `git bundle verify`, and test restoring it into a temporary directory. Git bundles preserve committed Git history, not external attachments or uncommitted files. Run through your own scheduler only after a real restore test.

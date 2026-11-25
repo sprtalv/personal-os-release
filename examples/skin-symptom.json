@@ -1,0 +1,8 @@
+{
+  "source": {"ref": "example-skin-1", "message_at": "2025-01-06T20:00:00+08:00"},
+  "raw_text": "Synthetic example: mild stinging after washing. I did not report any peeling score.",
+  "event": {
+    "type": "symptom", "category": "user_reported", "event_at": "2025-01-06",
+    "data": {"stinging": 1, "peeling": null, "scope": "moment", "new_lesions": null, "red_flags": []}
+  }
+}

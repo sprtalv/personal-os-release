@@ -45,3 +45,8 @@
 晚间读取 [reflection.md](reflection.md) 和 [followup.md](followup.md)，合并访谈、当天收尾及到期回填，避免重复问题。具体时刻由已配置调度决定；未配置不承诺自动发起。
 
 用户问“我现在该做什么”或“给我看总览”时，优先展示当前目标、下一步、近期截止、阻碍、待确认调整和到期回填，标注资料更新时间。不要把档案里的旧任务快照伪装成实时状态。
+
+## Plan confirmation
+A plan starts as a draft. A user can confirm it, edit and confirm it, or skip it. Record the date, source and decision separately from the tasks that were actually completed. If the user opts in, a normal conversation can include one brief reminder while today's plan is pending; stop after confirmation, skip, pause or the next local day. Acknowledging something else is not confirmation.
+
+Use [the host entry guide](host-entry.md) for timing and [training](training.md) or [skin log](skin-health.md) only when relevant. Do not fill unknown slots from stale snapshots.

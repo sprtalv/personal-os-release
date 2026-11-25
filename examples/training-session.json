@@ -1,0 +1,15 @@
+{
+  "source": {"ref": "example-workout-1", "message_at": "2025-01-06T18:00:00+08:00"},
+  "raw_text": "Synthetic example: bench, 40 kg total, eight reps on the first work set.",
+  "event": {
+    "type": "session", "category": "user_reported", "event_at": "2025-01-06",
+    "data": {
+      "session_id": "example-upper-1", "template": "A", "status": "partial", "actual_training": true,
+      "items": [{
+        "item_id": "bench", "role": "A1", "variant": "barbell-bench",
+        "equipment_id": "example-bar", "order": 1, "kind": "resistance",
+        "sets": [{"set_id": "w1", "type": "work", "reps": 8, "load": {"value": 40, "unit": "kg", "basis": "bar_total"}, "rir": null}]
+      }]
+    }
+  }
+}

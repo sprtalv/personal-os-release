@@ -41,3 +41,6 @@ python scripts/records.py search --root ROOT --query '当时的观点' --include
 没有找到只能说“目前没有找到相关记录”，不能说“从未发生”。时间覆盖不足、来源不可访问或条件不可比时明确限制。只在缺口影响当前判断时补问，不为填满档案要求用户回忆所有细节。
 
 检索命中不代表对象一定相同。重复导入使用来源身份、事件时间和具体对象校验；不同日期的相似经历应作为独立证据关联。
+
+## Personal views and evolving decisions
+For questions about recurring behavior, find the original statements as well as counterexamples and corrections before consulting a summary. Follow [the self-model guide](personal-growth.md).

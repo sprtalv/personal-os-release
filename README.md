@@ -2,6 +2,16 @@
 
 An experimental Skill for organizing selected personal evidence, plans, corrections, decisions, and follow-up outcomes. This repository contains generic workflow guidance, Python tools, templates, and synthetic tests. It contains no personal archive.
 
+## What you can use
+
+- **Daily planning:** an editable draft, explicit confirmation, and a short evening review that connects plans to what actually happened.
+- **Weekly and monthly review:** decisions, outcomes, open follow-ups, and a self-model that keeps hypotheses separate from facts and counterexamples.
+- **Training + nutrition:** log sets and equipment, prepare a session, track comparable performance, and summarize reported meals or measurements.
+- **Skin log:** keep routines, actual product use, symptoms, and dated review summaries separate.
+- **Optional operation:** connect host scheduling and task/calendar tools, publish to a separate private repository, or restore a private Git backup.
+
+Start with the [five-minute example](examples/README.md). The new modules use the same audit trail as core records; their example plan is editable and does not supply starting weights.
+
 ## Install
 
 1. Make .agents/skills/personal-os/SKILL.md accessible to an assistant host that supports local Skills. Host support and automatic triggering must be verified separately.
@@ -14,6 +24,8 @@ records.py validates and saves structured Markdown records with provenance and c
 Important, reusable understandings and AI suggestions now have separate [insight](.agents/skills/personal-os/assets/templates/insight.md) and [recommendation](.agents/skills/personal-os/assets/templates/recommendation.md) templates. `records.py impact --root ROOT --record-id ID` lists linked files and exact-ID mentions to review after a correction; it cannot repair meaning automatically. [Design sources and limits](.agents/skills/personal-os/references/design-evidence.md) explain the choices without claiming proven long-term benefit.
 
 ## 与 dot 配合使用
+
+See the shorter [host setup guide](.agents/skills/personal-os/references/host-entry.md) for everyday planning and review.
 
 dot 可以作为统一聊天入口：用户正常说话，无须每次手动调用 Skill 或填写表格。下面是可复制到支持自定义入口指令的宿主中的**通用工作约定**。先由安装者填写并实际核验占位项；不要把私人数据目录设为本公开仓库。README 不会自动配置 dot，也不能证明每轮调用钩子、定时任务或消息发送已经启用。
 
